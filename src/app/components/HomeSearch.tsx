@@ -12,7 +12,7 @@ export default function HomeSearch() {
     useState<boolean>(false);
 
   const submit = (searchTerms: string = input) => {
-    if (!input.trim()) return;
+    if (!searchTerms.trim()) return;
 
     router.push(`/search/web?searchTerm=${searchTerms}`);
   };
@@ -24,13 +24,21 @@ export default function HomeSearch() {
 
   async function randomSearch() {
     setRandomSearchLoading(true);
-    const res = await fetch("https://random-word-api.herokuapp.com/word");
-    const data = await res.json();
+    try {
+      const res = await fetch("https://random-word-api.herokuapp.com/word");
+      const data = await res.json();
 
-    if (!data || !data.length || data[0].trim() === "") return;
+      if (!data || !data.length || data[0].trim() === "") {
+        setRandomSearchLoading(false);
+        return;
+      }
 
-    submit(data[0]);
-    setRandomSearchLoading(false);
+      submit(data[0]);
+    } catch (error) {
+      console.error("Failed to fetch random word:", error);
+    } finally {
+      setRandomSearchLoading(false);
+    }
   }
 
   return (
