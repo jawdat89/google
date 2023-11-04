@@ -18,7 +18,7 @@ export default function SearchBox() {
 
     if (!term || term.trim() === "") return;
 
-    router.replace(`/search/web?searchTerm=${term}`);
+    router.push(`/search/web?searchTerm=${term}`);
   }
 
   return (
