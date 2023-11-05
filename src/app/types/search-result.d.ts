@@ -15,6 +15,9 @@ type SearchResult = {
     metatags: Array<Record<string, string>>;
     cse_image: Array<{ src: string }>;
   };
+  image: {
+    contextLink: string;
+  }
 };
 
 type CustomSearchURL = {
