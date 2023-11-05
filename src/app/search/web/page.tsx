@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import WebSearchResults from "@/app/components/WebSearchResults";
 
 interface Params {
   searchParams: {
@@ -10,13 +11,12 @@ export default async function WebSearchPage({ searchParams }: Params) {
   const response = await fetch(`
   https://www.googleapis.com/customsearch/v1?key=${process.env.GOOGLE_SEARCH_ENGINE_API_KEY}&cx=${process.env.GOOGLE_SEARCH_ENGINE_CONTEXT_KEY}&q=${searchParams.searchTerm}
   `);
-
   if (!response.ok) {
     throw new Error("An error occurred while fetching the data.");
   }
 
   const data = await response.json();
-  const results = data.items as SearchResult[];
+  const results = data as CustomSearchResponse;
 
   if (!results) {
     return (
@@ -32,11 +32,5 @@ export default async function WebSearchPage({ searchParams }: Params) {
       </div>
     );
   }
-  return (
-    <>
-      {results.map((result) => (
-        <h1 key={result.cacheId}>{result.title}</h1>
-      ))}
-    </>
-  );
+  return <>{results && <WebSearchResults results={results} />}</>;
 }
