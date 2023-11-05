@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-import Parser from "html-react-parser";
+import PaginationButtons from "./PaginationButtons";
 
 interface Props {
   results: CustomSearchResponse;
@@ -9,7 +9,7 @@ interface Props {
 
 export default function ImageSearchResults({ results }: Props) {
   return (
-    <div className="pb-24 mt-4">
+    <div className="pb-40 sm:pb-24 mt-4">
       <div className="grid grid-cols-1 sm:grid-col-2 lg:grid-cols-3 xl:grid-cols-4 px-3 space-x-4">
         {results.items.map((result) => (
           <div key={result.link} className="max-w-xl mb-8">
@@ -45,6 +45,9 @@ export default function ImageSearchResults({ results }: Props) {
             </div>
           </div>
         ))}
+      </div>
+      <div className="ml-16">
+        <PaginationButtons />
       </div>
     </div>
   );
